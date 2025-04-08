@@ -34,7 +34,7 @@ html[data-theme='6'] {
 
 
 body {
-  @include variables.no-user-select();
+  //@include variables.no-user-select();
 
   min-height: 100svh;
   min-width: 100svw;

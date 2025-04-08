@@ -1,9 +1,9 @@
-@import "../../styles/variables";
+@use "../../styles/variables" as v;
 
 $gap: 1rem;
 
 header {
-  height: $header-height;
+  height: v.$header-height;
   padding: 0 $gap;
 
   position: sticky;
@@ -38,12 +38,18 @@ header {
         padding: 0;
 
         li {
+          position: relative;
+          display: block;
+
           a {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            padding: 0.5rem;
+            cursor: pointer;
             color: inherit;
             text-decoration: none;
             font-weight: 500;
-            position: relative;
-            padding: 0.5rem 0;
           }
         }
       }

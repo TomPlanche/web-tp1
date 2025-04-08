@@ -1,5 +1,5 @@
 import "./App.scss";
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Header from "./components/Header/";
 
 import gsap from "gsap";
@@ -11,6 +11,9 @@ const App = () => {
 	// Variables
 	const title = "Tom Planche";
 	const DELAY_MS = 200;
+
+	// States
+	const [introAnimationDone, setIntroAnimationDone] = useState<boolean>(false);
 
 	// Refs
 	const titleRef = useRef<HTMLHeadingElement>(null);
@@ -34,6 +37,7 @@ const App = () => {
 		}, DELAY_MS);
 	};
 
+	// `useLayoutEffect` is used to ensure that the animation is applied after the DOM has been updated
 	useLayoutEffect(() => {
 		if (!titleRef.current || !imageRef.current || !paragraphRef.current) {
 			return;
@@ -85,9 +89,14 @@ const App = () => {
 			.to(paragraphRef.current, {
 				opacity: 1,
 				duration: 1,
+
+				onComplete: () => {
+					setIntroAnimationDone(true);
+				},
 			});
 	}, []);
 
+	// empty `useEffect` to run the title scroll function only once
 	useEffect(() => {
 		if (!titleRef.current) {
 			return;
@@ -108,7 +117,7 @@ const App = () => {
 			<Header />
 
 			<main>
-				<div className="intro">
+				<section className="intro">
 					<div className="left">
 						<h1 ref={titleRef}>Tom Planche</h1>
 						<p ref={paragraphRef}>
@@ -117,7 +126,15 @@ const App = () => {
 					</div>
 
 					<img ref={imageRef} src="/favicon.png" alt="Drawing of me" />
-				</div>
+				</section>
+				{
+					// Check if the intro animation is done before rendering the rest of the page
+					introAnimationDone && (
+						<section>
+							<h1>ZIZI</h1>
+						</section>
+					)
+				}
 			</main>
 		</>
 	);
