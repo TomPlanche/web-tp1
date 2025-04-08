@@ -1,0 +1,50 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  user-select: none;
+
+  // Default variant
+  &.default {
+    background: rgba(255, 255, 255, 0.8);
+    color: black;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.95);
+    }
+  }
+
+  // Rust variant
+  &.rust {
+    background: rgba(183, 65, 14, 0.8);
+    color: white;
+
+    &:hover {
+      background: rgba(183, 65, 14, 0.8);
+    }
+  }
+
+  // Web variant
+  &.web {
+    background: rgba(59, 130, 246, 0.8);
+    color: white;
+
+    &:hover {
+      background: rgba(59, 130, 246, 0.8);
+    }
+  }
+
+  // System variant
+  &.system {
+    background: rgba(16, 185, 129, 0.8);
+    color: black;
+
+    &:hover {
+      background: rgba(16, 185, 129, 0.95);
+    }
+  }
+}

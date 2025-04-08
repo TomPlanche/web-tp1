@@ -1,0 +1,64 @@
+.project {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, background 0.2s ease;
+  height: 100%;
+
+  &.clickable {
+    cursor: pointer;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  &__icon {
+    font-size: 1.5rem;
+  }
+
+  &__title {
+    font-family: "Mondwest", monospace;
+    font-size: 1.25rem;
+    margin: 0;
+
+  }
+
+  &__description {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.125;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+
+    // balance the text
+    text-align: justify;
+    text-justify: inter-word;
+    text-align-last: left;
+    text-wrap: balance;
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  &__tag {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+  }
+}
