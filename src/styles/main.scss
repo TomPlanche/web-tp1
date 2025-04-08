@@ -36,6 +36,9 @@ html[data-theme='6'] {
 body {
   @include variables.no-user-select();
 
+  min-height: 100svh;
+  min-width: 100svw;
+
   background-color: var(--background-color);
   color: var(--text-color);
 
@@ -43,4 +46,7 @@ body {
   color 0.1s ease-in-out;
 
   padding: variables.$main-padding;
+
+  display: flex;
+  flex-direction: column;
 }

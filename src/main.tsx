@@ -1,9 +1,15 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.tsx";
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+const body = document.querySelector("body");
+
+if (!body) {
+	throw new Error("Root element not found");
+}
+
+createRoot(body).render(
+	<StrictMode>
+		<App />
+	</StrictMode>,
+);

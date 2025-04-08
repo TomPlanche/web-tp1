@@ -96,3 +96,22 @@ $header-height: 5dvh;
 $footer-height: $header-height;
 
 $min-main-height: calc(100dvh - #{$header-height});
+
+
+/**
+ * Fonts
+ */
+// Mondwest
+@font-face {
+  font-family: 'Mondwest';
+  src: url('src/assets/fonts/PPMondwest/PPMondwest-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mondwest';
+  src: url('src/assets/fonts/PPMondwest/PPMondwest-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}

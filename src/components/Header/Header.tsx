@@ -1,7 +1,7 @@
+import "./Header.scss";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
-import { styled } from "styled-components";
-import { incrementTheme, themeStore } from "../stores/themeStore.ts";
+import { incrementTheme, themeStore } from "../../stores/themeStore.ts";
 
 /**
  * Header component
@@ -87,7 +87,7 @@ const Header = () => {
 	};
 
 	return (
-		<StyledHeader>
+		<header>
 			<h1>Tom Planche</h1>
 
 			<div className="left">
@@ -126,67 +126,10 @@ const Header = () => {
 					</svg>
 				</button>
 			</div>
-		</StyledHeader>
+		</header>
 	);
 };
 
-// Styled components
-const StyledHeader = styled.header`
-	--gap: 1rem;
-
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-	transition: all 0.3s ease;
-
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-
-
-	h1 {
-		font-size: 1.8rem;
-		font-weight: bold;
-	}
-
-	.left {
-		display: flex;
-		flex-direction: row;
-		gap: calc(var(--gap) * 2);
-		font-size: 1.5rem;
-
-		nav {
-			ul {
-				display: flex;
-				gap: var(--gap);
-				list-style: none;
-				margin: 0;
-				padding: 0;
-
-				li {
-					a {
-						color: inherit;
-						text-decoration: none;
-						font-weight: 500;
-						position: relative;
-						padding: 0.5rem 0;
-					}
-				}
-			}
-		}
-	}
-
-	@media (max-width: 768px) {
-		nav {
-			display: none;
-		}
-
-		h1 {
-			font-size: 1.5rem;
-		}
-	}
-`;
 // END COMPONENT =======================================================================================  END COMPONENT
 
 export default Header;
