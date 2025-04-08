@@ -34,10 +34,13 @@ html[data-theme='6'] {
 
 
 body {
+  @include variables.no-user-select();
+
   background-color: var(--background-color);
   color: var(--text-color);
 
-  transition: background-color 0.1s ease-in-out;
+  transition: background-color 0.1s ease-in-out,
+  color 0.1s ease-in-out;
 
-  @include variables.no-user-select();
+  padding: variables.$main-padding;
 }

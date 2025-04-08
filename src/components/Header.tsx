@@ -1,0 +1,192 @@
+import gsap from "gsap";
+import { useEffect, useRef, useState } from "react";
+import { styled } from "styled-components";
+import { incrementTheme, themeStore } from "../stores/themeStore.ts";
+
+/**
+ * Header component
+ * @return JSX.Element
+ * @constructor
+ **/
+const Header = () => {
+	// States
+	const [isAnimating, setIsAnimating] = useState(false);
+
+	// Refs
+	const button = useRef<HTMLButtonElement>(null);
+	const timelineRef = useRef<GSAPTimeline>(null);
+
+	// Initialize timeline
+	useEffect(() => {
+		timelineRef.current = gsap.timeline({
+			paused: true,
+			onStart: () => {
+				setIsAnimating(true);
+			},
+			onComplete: () => {
+				setIsAnimating(false);
+			},
+		});
+
+		return () => {
+			if (timelineRef.current) {
+				timelineRef.current.kill();
+			}
+		};
+	}, []);
+
+	// Methods
+	const handleMouseEnter = () => {
+		if (isAnimating || !button.current) {
+			return;
+		}
+
+		timelineRef.current?.clear();
+		timelineRef.current?.to(button.current, {
+			rotate: 12,
+			duration: 0.2,
+		});
+
+		timelineRef.current?.play();
+	};
+
+	const handleMouseLeave = () => {
+		if (!button.current) {
+			return;
+		}
+
+		timelineRef.current?.clear();
+		timelineRef.current?.to(button.current, {
+			rotate: 0,
+			duration: 0.2,
+		});
+
+		timelineRef.current?.play();
+	};
+
+	const handleClick = () => {
+		if (isAnimating || !button.current) {
+			return;
+		}
+
+		themeStore.dispatch(incrementTheme());
+
+		timelineRef.current?.clear();
+		timelineRef.current
+			?.to(button.current, {
+				rotation: 360,
+				duration: 0.5,
+				ease: "power2.out",
+			})
+			.to(button.current, {
+				rotation: 0,
+				duration: 0,
+			});
+
+		timelineRef.current?.play();
+	};
+
+	return (
+		<StyledHeader>
+			<h1>Tom Planche</h1>
+
+			<div className="left">
+				<nav>
+					<ul>
+						<li>
+							<a href="#profile">About me</a>
+						</li>
+						<li>
+							<a href="#projects">Projects</a>
+						</li>
+					</ul>
+				</nav>
+
+				<button
+					type="button"
+					ref={button}
+					onMouseEnter={handleMouseEnter}
+					onMouseLeave={handleMouseLeave}
+					onClick={handleClick}
+					aria-label="Toggle theme change"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="1em"
+						height="1em"
+						viewBox="0 0 24 24"
+						role="img"
+						aria-labelledby="title"
+					>
+						<title id="title">Icon for theme change</title>&aq
+						<path
+							fill="currentColor"
+							d="M16 2h-2v2h2v2H4v2H2v5h2V8h12v2h-2v2h2v-2h2V8h2V6h-2V4h-2zM6 20h2v2h2v-2H8v-2h12v-2h2v-5h-2v5H8v-2h2v-2H8v2H6v2H4v2h2z"
+						/>
+					</svg>
+				</button>
+			</div>
+		</StyledHeader>
+	);
+};
+
+// Styled components
+const StyledHeader = styled.header`
+	--gap: 1rem;
+
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	transition: all 0.3s ease;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+
+
+	h1 {
+		font-size: 1.8rem;
+		font-weight: bold;
+	}
+
+	.left {
+		display: flex;
+		flex-direction: row;
+		gap: calc(var(--gap) * 2);
+		font-size: 1.5rem;
+
+		nav {
+			ul {
+				display: flex;
+				gap: var(--gap);
+				list-style: none;
+				margin: 0;
+				padding: 0;
+
+				li {
+					a {
+						color: inherit;
+						text-decoration: none;
+						font-weight: 500;
+						position: relative;
+						padding: 0.5rem 0;
+					}
+				}
+			}
+		}
+	}
+
+	@media (max-width: 768px) {
+		nav {
+			display: none;
+		}
+
+		h1 {
+			font-size: 1.5rem;
+		}
+	}
+`;
+// END COMPONENT =======================================================================================  END COMPONENT
+
+export default Header;
