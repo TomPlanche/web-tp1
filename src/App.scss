@@ -35,9 +35,9 @@ main {
     justify-content: center;
     align-items: center;
 
-    &.intro {
-      $min-height: calc(100svh - #{v.$header-height} - #{v.$main-padding} * 2);
-      height: $min-height;
+    &#intro {
+      $min-height: calc(100svh - #{v.$main-padding});
+      min-height: $min-height;
 
       h1 {
         font-family: "Mondwest", monospace;
@@ -57,7 +57,7 @@ main {
       }
     }
 
-    &.projects {
+    &#projects {
       flex-direction: column;
 
       padding: 2rem;

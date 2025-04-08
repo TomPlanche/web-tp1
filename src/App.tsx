@@ -154,7 +154,7 @@ const App = () => {
 			<Header />
 
 			<main>
-				<section className="intro">
+				<section id="intro">
 					<div className="left">
 						<h1 ref={titleRef}>Tom Planche</h1>
 						<p ref={paragraphRef}>
@@ -167,7 +167,7 @@ const App = () => {
 				{
 					// Check if the intro animation is done before rendering the rest of the page
 					introAnimationDone && (
-						<section className="projects">
+						<section id="projects">
 							<h2>Projects</h2>
 							<div className="grid">
 								{projects.map((project) => (

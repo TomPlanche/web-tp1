@@ -1,7 +1,10 @@
 import "./Header.scss";
 import gsap from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { useEffect, useRef, useState } from "react";
 import { incrementTheme, themeStore } from "../../stores/themeStore.ts";
+
+gsap.registerPlugin(ScrollToPlugin);
 
 /**
  * Header component
@@ -86,6 +89,10 @@ const Header = () => {
 		timelineRef.current?.play();
 	};
 
+	const handleLinkClick = (target: string) => {
+		gsap.to(window, { duration: 2, scrollTo: target });
+	};
+
 	return (
 		<header>
 			<h1>Tom Planche</h1>
@@ -94,10 +101,16 @@ const Header = () => {
 				<nav>
 					<ul>
 						<li>
-							<a href="#profile">About me</a>
-						</li>
-						<li>
-							<a href="#projects">Projects</a>
+							<span
+								onClick={() => handleLinkClick("#projects")}
+								onKeyDown={(e) => {
+									if (e.key === "Enter" || e.key === " ") {
+										handleLinkClick("#projects");
+									}
+								}}
+							>
+								Projects
+							</span>
 						</li>
 					</ul>
 				</nav>
