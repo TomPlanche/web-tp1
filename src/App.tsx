@@ -1,48 +1,13 @@
 import "./App.scss";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import Header from "./components/Header/";
-
 import gsap from "gsap";
-import Project from "./components/Project";
-import type { TProject } from "./components/Project/Project.tsx";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ScrambleTextPlugin } from "./utils/gsap/ScrambleText";
 
-gsap.registerPlugin(ScrambleTextPlugin);
+import Header from "./components/Header";
+import { NewProject, Project } from "./components/Project";
+import { useProjectsStoreSelector } from "./stores/hooks/projectsStoreHooks.ts";
 
-const projects: Array<TProject> = [
-	{
-		title: "Binario.rs",
-		description:
-			"A modern implementation of the Binairo puzzle game built with Tauri, SvelteKit, and Rust. Features multiple grid sizes, real-time validation, and a responsive UI.",
-		icon: "🎮",
-		tags: ["Rust", "Svelte", "Tauri"],
-		link: "https://github.com/TomPlanche/binario_rs",
-	},
-	{
-		title: "Git CLI Helper",
-		description:
-			"A powerful Rust-based CLI tool that streamlines Git workflow by automating commit message generation and branch management.",
-		icon: "🦀",
-		tags: ["Rust", "CLI", "Git"],
-		link: "https://github.com/TomPlanche/git-cli-helper",
-	},
-	{
-		title: "VPS Stats",
-		description:
-			"A monitoring tool for VPS statistics, providing insights and metrics for server performance.",
-		icon: "📊",
-		tags: ["Monitoring", "VPS", "System Stats"],
-		link: "https://github.com/TomPlanche/vps_stats",
-	},
-	{
-		title: "Chess TUI Contributions",
-		description:
-			"Contributed to a terminal-based chess game implementation, focusing on improving game mechanics and user experience.",
-		icon: "♟️",
-		tags: ["Rust", "TUI", "Open Source"],
-		link: "https://github.com/thomas-mauran/chess-tui/pull/128",
-	},
-];
+gsap.registerPlugin(ScrambleTextPlugin);
 
 const App = () => {
 	// Variables
@@ -51,6 +16,7 @@ const App = () => {
 
 	// States
 	const [introAnimationDone, setIntroAnimationDone] = useState<boolean>(false);
+	const projects = useProjectsStoreSelector((state) => state.value);
 
 	// Refs
 	const titleRef = useRef<HTMLHeadingElement>(null);
@@ -173,6 +139,8 @@ const App = () => {
 								{projects.map((project) => (
 									<Project key={`${project.title}`} {...project} />
 								))}
+
+								<NewProject />
 							</div>
 						</section>
 					)

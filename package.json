@@ -10,11 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mui/material": "^7.0.1",
     "@reduxjs/toolkit": "^2.6.1",
     "gsap": "^3.12.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "styled-components": "^6.1.17"
+    "react-redux": "^9.2.0",
+    "redux": "^5.0.1",
+    "styled-components": "^6.1.17",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",

@@ -1,13 +1,7 @@
 import "./Project.scss";
+import { v4 as uuidv4 } from "uuid";
 import Pill from "../Pill";
-
-export type TProject = {
-	title: string;
-	description: string;
-	icon?: string;
-	tags?: string[];
-	link?: string;
-};
+import type { TProject } from "./index.ts";
 
 const Project = ({ title, description, icon, tags, link }: TProject) => {
 	// Helper function to determine tag variant based on tag name
@@ -46,7 +40,7 @@ const Project = ({ title, description, icon, tags, link }: TProject) => {
 			{tags && tags.length > 0 && (
 				<div className="project__tags">
 					{tags.map((tag) => (
-						<Pill key={`tag-${tag}`} label={tag} variant={getTagVariant(tag)} />
+						<Pill key={uuidv4()} label={tag} variant={getTagVariant(tag)} />
 					))}
 				</div>
 			)}
