@@ -1,10 +1,11 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-import type { TProject } from "../components/Project/Project.tsx";
+import { type TProject, projectSchema } from "../components/Project/";
+import { shuffle } from "../utils";
 
 const PROJECT_STORAGE_KEY = "projects";
 
-const BASE_PROJECTS: Array<TProject> = [
+export const BASE_PROJECTS: Array<TProject> = [
 	{
 		id: uuidv4(),
 		title: "Binario.rs",
@@ -41,6 +42,42 @@ const BASE_PROJECTS: Array<TProject> = [
 		tags: ["Rust", "TUI", "Open Source"],
 		link: "https://github.com/thomas-mauran/chess-tui/pull/128",
 	},
+	{
+		id: uuidv4(),
+		title: "Last.fm Fetch",
+		description:
+			"A Rust library for fetching and analyzing Last.fm user data with ease. Features async API integration, comprehensive statistics, and data export capabilities.",
+		icon: "🎵",
+		tags: ["Rust", "API", "Data Analysis"],
+		link: "https://github.com/TomPlanche/last_fm_fetch",
+	},
+	{
+		id: uuidv4(),
+		title: "Personal Website",
+		description:
+			"My personal website built with Svelte and SvelteKit. Features a modern UI with smooth animations, custom cursor, and Last.fm integration.",
+		icon: "🌐",
+		tags: ["SvelteKit", "API"],
+		link: "https://github.com/TomPlanche/website",
+	},
+	{
+		id: uuidv4(),
+		title: "Projet Jérémie",
+		description:
+			"Research tool repository created for a friend's Master's thesis that analyzes medieval texts. It finds word occurrences while accounting for historical spelling variations. The system is designed to be user-friendly for non-technical users, with configurable search terms and error tolerance.",
+		icon: "🤝",
+		tags: ["Rust", "Text Analysis", "Python"],
+		link: "https://github.com/TomPlanche/projet-jeremie",
+	},
+	{
+		id: uuidv4(),
+		title: "Advent of Code 2024",
+		description:
+			"My solutions for the Advent of Code 2024 programming challenges, demonstrating problem-solving skills and code organization.",
+		icon: "🎄",
+		tags: ["Rust", "Challenges", "Problem Solving"],
+		link: "https://github.com/TomPlanche/aoc-2024",
+	},
 ];
 
 const getBaseProjects = (): Array<TProject> => {
@@ -58,7 +95,7 @@ const getBaseProjects = (): Array<TProject> => {
 			return BASE_PROJECTS as Array<TProject>;
 		}
 	}
-	return BASE_PROJECTS as Array<TProject>;
+	return BASE_PROJECTS.slice(0, 5) as Array<TProject>;
 };
 
 const projectSlice = createSlice({
@@ -68,7 +105,15 @@ const projectSlice = createSlice({
 	},
 	reducers: {
 		addProject: (state, action) => {
-			state.value.push(action.payload);
+			// Verify that the passed project has a valid structure
+			const response = projectSchema.safeParse(action.payload);
+
+			if (!response.success) {
+				console.error("Invalid project structure", response.error);
+				return;
+			}
+
+			state.value.push(response.data);
 			localStorage.setItem(PROJECT_STORAGE_KEY, JSON.stringify(state.value));
 		},
 		removeProject: (state, action) => {
@@ -77,16 +122,35 @@ const projectSlice = createSlice({
 			);
 			localStorage.setItem(PROJECT_STORAGE_KEY, JSON.stringify(state.value));
 		},
+		addNewRandomProject: (state) => {
+			// Check if the state already contains all the base projects
+			if (state.value.length >= BASE_PROJECTS.length) {
+				return;
+			}
+
+			// Get a random project from the base projects that is not already in the state
+			const randomProject = BASE_PROJECTS.filter(
+				(project) => !state.value.some((p) => p.id === project.id),
+			)[0];
+
+			if (randomProject) {
+				// Add the random project to the state
+				state.value.push(randomProject);
+				localStorage.setItem(PROJECT_STORAGE_KEY, JSON.stringify(state.value));
+			}
+		},
+		resetProjects: (state) => {
+			state.value = shuffle(BASE_PROJECTS).slice(0, 5);
+			localStorage.setItem(PROJECT_STORAGE_KEY, JSON.stringify(state.value));
+		},
 	},
 });
 
-export const { addProject, removeProject } = projectSlice.actions;
+export const { addProject, removeProject, addNewRandomProject, resetProjects } =
+	projectSlice.actions;
 
 export const projectsStore = configureStore({
 	reducer: projectSlice.reducer,
 });
 
 export type TProjectsStoreRootState = ReturnType<typeof projectsStore.getState>;
-
-export type TProjectsStoreDispatch = typeof projectsStore.dispatch;
-export type TProjectsStoreStore = typeof projectsStore;

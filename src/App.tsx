@@ -3,9 +3,15 @@ import gsap from "gsap";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ScrambleTextPlugin } from "./utils/gsap/ScrambleText";
 
+import Footer from "./components/Footer/Footer.tsx";
 import Header from "./components/Header";
 import { NewProject, Project } from "./components/Project";
 import { useProjectsStoreSelector } from "./stores/hooks/projectsStoreHooks.ts";
+import {
+	BASE_PROJECTS,
+	projectsStore,
+	resetProjects,
+} from "./stores/projectsStore.ts";
 
 gsap.registerPlugin(ScrambleTextPlugin);
 
@@ -38,6 +44,10 @@ const App = () => {
 			currentTitle = getNextTitle(currentTitle);
 			document.title = currentTitle;
 		}, DELAY_MS);
+	};
+
+	const handleResetLocalStorage = (): void => {
+		projectsStore.dispatch(resetProjects());
 	};
 
 	// `useLayoutEffect` is used to ensure that the animation is applied after the DOM has been updated
@@ -85,10 +95,14 @@ const App = () => {
 				opacity: 1,
 				duration: 1,
 			})
-			.to(paragraphRef.current, {
-				height: "auto",
-				duration: 1,
-			})
+			.to(
+				paragraphRef.current,
+				{
+					height: "auto",
+					duration: 1,
+				},
+				"<",
+			)
 			.to(paragraphRef.current, {
 				opacity: 1,
 				duration: 1,
@@ -134,18 +148,35 @@ const App = () => {
 					// Check if the intro animation is done before rendering the rest of the page
 					introAnimationDone && (
 						<section id="projects">
-							<h2>Projects</h2>
+							<h2>
+								Projects
+								<button
+									type="button"
+									className="reset-local-storage"
+									onClick={handleResetLocalStorage}
+									onKeyDown={(e) => {
+										if (e.key === "Enter") {
+											handleResetLocalStorage();
+										}
+									}}
+									title="Reset localStorage"
+								>
+									<span>[</span>reset localStorage <span>]</span>
+								</button>
+							</h2>
 							<div className="grid">
 								{projects.map((project) => (
 									<Project key={`${project.title}`} {...project} />
 								))}
 
-								<NewProject />
+								{projects.length < BASE_PROJECTS.length && <NewProject />}
 							</div>
 						</section>
 					)
 				}
 			</main>
+
+			{introAnimationDone && <Footer />}
 		</>
 	);
 };

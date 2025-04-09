@@ -90,7 +90,7 @@ const Header = () => {
 	};
 
 	const handleLinkClick = (target: string) => {
-		gsap.to(window, { duration: 2, scrollTo: target });
+		gsap.to(window, { duration: 2, scrollTo: target, ease: "power2.out" });
 	};
 
 	return (

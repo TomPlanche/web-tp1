@@ -9,7 +9,8 @@ const Project = ({ title, description, icon, tags, link }: TProject) => {
 		tag: string,
 	): "default" | "rust" | "web" | "system" => {
 		if (tag.toLowerCase().includes("rust")) return "rust";
-		if (["svelte", "web", "tauri"].includes(tag.toLowerCase())) return "web";
+		if (["svelte", "web", "tauri", "sveltekit"].includes(tag.toLowerCase()))
+			return "web";
 		if (["vps", "cli", "system"].includes(tag.toLowerCase())) return "system";
 		return "default";
 	};
