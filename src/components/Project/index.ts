@@ -1,5 +1,4 @@
-import { z } from "zod";
-import NewProject from "./NewProject.tsx";
+import {z} from "zod";
 import Project from "./Project.tsx";
 
 export const projectSchema = z.object({
@@ -12,4 +11,4 @@ export const projectSchema = z.object({
 });
 
 export type TProject = z.infer<typeof projectSchema>;
-export { Project, NewProject };
+export {Project};

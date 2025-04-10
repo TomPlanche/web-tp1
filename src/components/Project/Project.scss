@@ -26,6 +26,7 @@
         align-items: center;
         gap: 1rem;
         margin-bottom: 1rem;
+        position: relative;
     }
 
     &__icon {
@@ -55,6 +56,23 @@
         font-family: "Mondwest", monospace;
         font-size: 1.25rem;
         margin: 0;
+        flex: 1;
+    }
+
+    &__delete {
+        background: none;
+        border: none;
+        color: var(--text-color);
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.25rem;
+        line-height: 1;
+        opacity: 0.5;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+            opacity: 1;
+        }
     }
 
     &__description {
@@ -77,8 +95,6 @@
 
         &__item {
             display: inline-flex;
-
         }
     }
-
 }

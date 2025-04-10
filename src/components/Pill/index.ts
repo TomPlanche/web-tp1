@@ -1,3 +1,6 @@
-import Pill from "./Pill.tsx";
+import Pill, {getTagVariant} from "./Pill.tsx";
 
 export default Pill;
+export {
+  getTagVariant
+}

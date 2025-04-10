@@ -1,17 +1,14 @@
 import "./App.scss";
 import gsap from "gsap";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { ScrambleTextPlugin } from "./utils/gsap/ScrambleText";
+import {useEffect, useLayoutEffect, useRef, useState} from "react";
+import {ScrambleTextPlugin} from "./utils/gsap/ScrambleText";
 
 import Footer from "./components/Footer/Footer.tsx";
 import Header from "./components/Header";
-import { NewProject, Project } from "./components/Project";
-import { useProjectsStoreSelector } from "./stores/hooks/projectsStoreHooks.ts";
-import {
-	BASE_PROJECTS,
-	projectsStore,
-	resetProjects,
-} from "./stores/projectsStore.ts";
+import {Project} from "./components/Project";
+import {projectsStore, resetProjects, selectProjects,} from "./stores/projectsStore.ts";
+import NewProjectForm from "./components/Project/NewProjectForm.tsx";
+import {useSelector} from "react-redux";
 
 gsap.registerPlugin(ScrambleTextPlugin);
 
@@ -22,7 +19,7 @@ const App = () => {
 
 	// States
 	const [introAnimationDone, setIntroAnimationDone] = useState<boolean>(false);
-	const projects = useProjectsStoreSelector((state) => state.value);
+	const projects = useSelector(selectProjects);
 
 	// Refs
 	const titleRef = useRef<HTMLHeadingElement>(null);
@@ -44,10 +41,6 @@ const App = () => {
 			currentTitle = getNextTitle(currentTitle);
 			document.title = currentTitle;
 		}, DELAY_MS);
-	};
-
-	const handleResetLocalStorage = (): void => {
-		projectsStore.dispatch(resetProjects());
 	};
 
 	// `useLayoutEffect` is used to ensure that the animation is applied after the DOM has been updated
@@ -128,6 +121,10 @@ const App = () => {
 		};
 	});
 
+	const handleResetLocalStorage = (): void => {
+		projectsStore.dispatch(resetProjects());
+	};
+
 	return (
 		<>
 			<div id="noise" />
@@ -168,9 +165,9 @@ const App = () => {
 								{projects.map((project) => (
 									<Project key={`${project.title}`} {...project} />
 								))}
-
-								{projects.length < BASE_PROJECTS.length && <NewProject />}
 							</div>
+
+							<NewProjectForm/>
 						</section>
 					)
 				}

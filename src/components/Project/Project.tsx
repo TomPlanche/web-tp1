@@ -1,24 +1,22 @@
 import "./Project.scss";
-import { v4 as uuidv4 } from "uuid";
-import Pill from "../Pill";
-import type { TProject } from "./index.ts";
+import {useDispatch} from "react-redux";
+import {v4 as uuidv4} from "uuid";
+import {removeProject} from "../../stores/projectsStore.ts";
+import Pill, {getTagVariant} from "../Pill";
+import type {TProject} from "./index.ts";
 
-const Project = ({ title, description, icon, tags, link }: TProject) => {
-	// Helper function to determine tag variant based on tag name
-	const getTagVariant = (
-		tag: string,
-	): "default" | "rust" | "web" | "system" => {
-		if (tag.toLowerCase().includes("rust")) return "rust";
-		if (["svelte", "web", "tauri", "sveltekit"].includes(tag.toLowerCase()))
-			return "web";
-		if (["vps", "cli", "system"].includes(tag.toLowerCase())) return "system";
-		return "default";
-	};
+const Project = ({id, title, description, icon, tags, link}: TProject) => {
+	const dispatch = useDispatch();
 
 	const handleClick = () => {
 		if (link) {
 			window.open(link, "_blank");
 		}
+	};
+
+	const handleDelete = (e: Event) => {
+		e.stopPropagation();
+		dispatch(removeProject(id));
 	};
 
 	return (
@@ -34,6 +32,14 @@ const Project = ({ title, description, icon, tags, link }: TProject) => {
 			<div className="project__header">
 				<span className="project__icon">{icon}</span>
 				<h3 className="project__title">{title}</h3>
+				<button
+					type="button"
+					className="project__delete"
+					onClick={handleDelete}
+					aria-label="Delete project"
+				>
+					×
+				</button>
 			</div>
 
 			<p className="project__description">{description}</p>
@@ -41,7 +47,11 @@ const Project = ({ title, description, icon, tags, link }: TProject) => {
 			{tags && tags.length > 0 && (
 				<div className="project__tags">
 					{tags.map((tag) => (
-						<Pill key={uuidv4()} label={tag} variant={getTagVariant(tag)} />
+						<Pill
+							key={uuidv4()}
+							label={tag}
+							variant={getTagVariant(tag)}
+						/>
 					))}
 				</div>
 			)}

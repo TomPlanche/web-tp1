@@ -1,0 +1,177 @@
+.new-project {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+
+  h1 {
+    align-self: flex-start;
+  }
+
+  .form {
+    min-height: 20svh;
+    width: 80%;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+
+    border-radius: 12px;
+    outline: 2px dashed color-mix(in srgb, var(--text-color) 30%, transparent);
+    transition: outline 0.2s ease;
+
+    &:focus-within {
+      outline: 2px dashed var(--text-color);
+    }
+
+    input, textarea, #submit {
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid color-mix(in srgb, var(--text-color) 50%, transparent);
+      color: var(--text-color);
+      background: transparent;
+      transition: all 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: var(--text-color);
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--text-color) 20%, transparent);
+      }
+    }
+
+    input {
+      width: 100%;
+      font-size: 1.25rem;
+    }
+
+    textarea {
+      width: 100%;
+      font-size: 1.125rem;
+      resize: vertical;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      width: 90%;
+
+      .emoji-picker-container, input {
+        height: 3.5rem;
+      }
+
+      .emoji-picker-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 0.75rem;
+      width: 90%;
+    }
+
+    .tags-input-container {
+      width: 100%;
+
+      .selected-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+
+        .tag-item {
+          display: flex;
+          align-items: center;
+          gap: 0.25rem;
+
+          .remove-tag {
+            cursor: pointer;
+            padding: 0.25rem;
+            line-height: 1;
+            color: var(--text-color);
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+
+            &:hover {
+              opacity: 1;
+            }
+          }
+        }
+      }
+
+      .tag-input-wrapper {
+        position: relative;
+        width: 100%;
+
+        input {
+          width: 100%;
+          font-size: 1rem;
+        }
+
+        .suggestions-dropdown {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: var(--background-color);
+          border: 1px solid color-mix(in srgb, var(--text-color) 30%, transparent);
+          border-radius: 8px;
+          margin-top: 0.5rem;
+          max-height: 200px;
+          overflow-y: auto;
+          z-index: 1000;
+          box-shadow: 0 4px 6px color-mix(in srgb, var(--text-color) 10%, transparent);
+
+          .suggestion-item {
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+              background: color-mix(in srgb, var(--text-color) 10%, transparent);
+            }
+          }
+        }
+      }
+    }
+
+    #submit {
+      margin-top: 1rem;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid var(--text-color);
+
+      &:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--text-color) 10%, transparent);
+        transform: translateY(-1px);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0);
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+        border-color: color-mix(in srgb, var(--text-color) 50%, transparent);
+        background: color-mix(in srgb, var(--text-color) 5%, transparent);
+      }
+    }
+  }
+}

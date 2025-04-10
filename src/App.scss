@@ -61,6 +61,7 @@ main {
 
       flex-direction: column;
       justify-content: flex-start;
+      gap: 2rem;
 
       padding: $top-padding v.$main-padding * 2;
 
@@ -113,6 +114,8 @@ main {
           grid-template-columns: 1fr;
         }
       }
+
+
     }
   }
 
