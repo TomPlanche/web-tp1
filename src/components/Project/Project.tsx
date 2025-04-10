@@ -1,9 +1,10 @@
 import "./Project.scss";
+import Pill, {getTagVariant} from "../Pill";
 import {useDispatch} from "react-redux";
 import {v4 as uuidv4} from "uuid";
 import {removeProject} from "../../stores/projectsStore.ts";
-import Pill, {getTagVariant} from "../Pill";
 import type {TProject} from "./index.ts";
+import type {MouseEvent} from "react";
 
 const Project = ({id, title, description, icon, tags, link}: TProject) => {
 	const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const Project = ({id, title, description, icon, tags, link}: TProject) => {
 		}
 	};
 
-	const handleDelete = (e: Event) => {
+	const handleDelete = (e: MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		dispatch(removeProject(id));
 	};
@@ -35,7 +36,7 @@ const Project = ({id, title, description, icon, tags, link}: TProject) => {
 				<button
 					type="button"
 					className="project__delete"
-					onClick={handleDelete}
+					onClick={(e) => handleDelete(e)}
 					aria-label="Delete project"
 				>
 					×

@@ -11,4 +11,4 @@ export const projectSchema = z.object({
 });
 
 export type TProject = z.infer<typeof projectSchema>;
-export {Project};
+export default Project;

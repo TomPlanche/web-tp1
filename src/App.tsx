@@ -2,13 +2,13 @@ import "./App.scss";
 import gsap from "gsap";
 import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {ScrambleTextPlugin} from "./utils/gsap/ScrambleText";
+import {useSelector} from "react-redux";
 
 import Footer from "./components/Footer/Footer.tsx";
 import Header from "./components/Header";
-import {Project} from "./components/Project";
-import {projectsStore, resetProjects, selectProjects,} from "./stores/projectsStore.ts";
+import Project from "./components/Project";
 import NewProjectForm from "./components/Project/NewProjectForm.tsx";
-import {useSelector} from "react-redux";
+import {projectsStore, resetProjects, selectProjects,} from "./stores/projectsStore.ts";
 
 gsap.registerPlugin(ScrambleTextPlugin);
 
